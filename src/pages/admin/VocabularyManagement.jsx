@@ -6,6 +6,7 @@ import UXForm from "../../components/form/UXForm";
 import UXInput from "../../components/form/UXInput";
 import UXSelect from "../../components/form/UXSelect";
 import Button from "../../components/ui/Button";
+import { useAuth } from "../../context/AuthContext";
 
 const VocabularyManagement = () => {
   const [vocabularies, setVocabularies] = useState([]);
@@ -13,6 +14,13 @@ const VocabularyManagement = () => {
   const [editingVocabulary, setEditingVocabulary] = useState(null);
   const [filterLessonNo, setFilterLessonNo] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { user } = useAuth();
+
+  const lessonOptions = lessons?.map((lesson) => ({
+    value: lesson.lessonNumber,
+    label: lesson.lessonName,
+  }));
+  console.log(lessonOptions);
 
   useEffect(() => {
     fetchVocabularies();
@@ -36,7 +44,7 @@ const VocabularyManagement = () => {
   const fetchVocabularies = async () => {
     try {
       const response = await axiosPublic.get("/vocabularies");
-      setVocabularies(response.data);
+      setVocabularies(response.data.data);
     } catch (error) {
       console.error("Error fetching vocabularies:", error);
       toast.success("Failed to load vocabularies. Please try again.");
@@ -46,7 +54,7 @@ const VocabularyManagement = () => {
   const fetchLessons = async () => {
     try {
       const response = await axiosPublic.get("/lessons");
-      setLessons(response.data);
+      setLessons(response.data.data);
     } catch (error) {
       console.error("Error fetching lessons:", error);
       toast.error("Failed to load lessons. Please try again.");
@@ -54,14 +62,16 @@ const VocabularyManagement = () => {
   };
 
   const onSubmit = async (data) => {
+    const payload = { ...data, adminEmail: user.email };
     try {
       const url = editingVocabulary
         ? `/vocabularies/${editingVocabulary._id}`
         : "/vocabularies";
       editingVocabulary
         ? await axiosPublic.put(url, data)
-        : await axiosPublic.post(url, data);
+        : await axiosPublic.post(url, payload);
       fetchVocabularies();
+      closeModal();
       setEditingVocabulary(null);
       toast.success(
         editingVocabulary
@@ -70,7 +80,7 @@ const VocabularyManagement = () => {
       );
     } catch (error) {
       console.error("Error:", error);
-      alert(error.message);
+      toast.success(error.message);
     }
   };
 
@@ -86,7 +96,7 @@ const VocabularyManagement = () => {
   };
 
   const filteredVocabularies = filterLessonNo
-    ? vocabularies.filter((v) => v.lessonNo.toString() === filterLessonNo)
+    ? vocabularies?.filter((v) => v.lessonNo.toString() === filterLessonNo)
     : vocabularies;
 
   return (
@@ -122,6 +132,7 @@ const VocabularyManagement = () => {
               name="meaning"
               placeholder="Eneter meaning "
               label="Meaning"
+              required={false}
             />
           </div>
           <div>
@@ -136,10 +147,7 @@ const VocabularyManagement = () => {
             <UXSelect
               label="Select a lesson"
               name="lessonNo"
-              options={[
-                { value: "option1", label: "Option 1" },
-                { value: "option2", label: "Option 2" },
-              ]}
+              options={lessonOptions}
             />
           </div>
           <Button>
@@ -164,7 +172,7 @@ const VocabularyManagement = () => {
               className="rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
             >
               <option value="">All Lessons</option>
-              {lessons.map((lesson) => (
+              {lessons?.map((lesson) => (
                 <option key={lesson._id} value={lesson.lessonNumber}>
                   Lesson {lesson.lessonNumber}
                 </option>
@@ -197,7 +205,7 @@ const VocabularyManagement = () => {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {filteredVocabularies.map((vocabulary) => (
+              {filteredVocabularies?.map((vocabulary) => (
                 <tr key={vocabulary._id}>
                   <td className="px-6 py-4 whitespace-nowrap">
                     {vocabulary.word}
@@ -212,7 +220,7 @@ const VocabularyManagement = () => {
                   <td className="px-6 py-4 whitespace-nowrap">
                     {vocabulary.lessonNo}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                  <td className="px-6 py-4 flex gap-2 whitespace-nowrap text-sm font-medium">
                     <Button onClick={() => openModal(vocabulary)}>Edit</Button>
                     <Button
                       variant="danger"
