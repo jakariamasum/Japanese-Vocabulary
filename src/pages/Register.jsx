@@ -1,22 +1,25 @@
 import { useAuth } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import UXForm from "../components/form/UXForm";
 import UXInput from "../components/form/UXInput";
 import Button from "../components/ui/Button";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const { register: registerUser } = useAuth();
   const navigate = useNavigate();
-
   const onSubmit = async (data) => {
     console.log(data);
     try {
-      await registerUser(data.name, data.email, data.password, data.photoUrl);
-      toast.success(
-        "Registration successful. Welcome to Japanese Vocabulary Learning App!"
+      const sucess = await registerUser(
+        data.name,
+        data.email,
+        data.password,
+        data.photoUrl
       );
-      navigate("/lessons");
+      if (sucess) {
+        navigate("/login");
+      }
     } catch (error) {
       toast.error(
         error instanceof Error

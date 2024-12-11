@@ -1,5 +1,5 @@
 const envConfig = {
-  baseApi: import.meta.env.REACT_APP_BASE_URL,
+  baseApi: "http://localhost:5000/api/v1",
 };
 
 export default envConfig;

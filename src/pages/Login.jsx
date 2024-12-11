@@ -12,9 +12,10 @@ const Login = () => {
   const onSubmit = async (data) => {
     console.log(data);
     try {
-      await login(data.email, data.password);
-      toast.success("Login successful. Welcome back!");
-      navigate("/lessons");
+      const sucess = await login(data.email, data.password);
+      if (sucess) {
+        navigate("/");
+      }
     } catch (error) {
       toast.error(
         error instanceof Error

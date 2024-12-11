@@ -1,6 +1,8 @@
 /* eslint-disable react/prop-types */
 import { createContext, useState, useContext, useEffect } from "react";
 import axios from "axios";
+import axiosPublic from "../lib/axiosPublic";
+import { toast } from "sonner";
 
 const AuthContext = createContext(undefined);
 
@@ -26,9 +28,14 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = async (email, password) => {
-    const res = await axios.post("/api/auth/login", { email, password });
-    localStorage.setItem("authToken", res.data.token);
-    setUser(res.data.user);
+    const res = await axiosPublic.post("/auth/login", { email, password });
+    console.log(res.data.data);
+    if (res.data.success) {
+      localStorage.setItem("authToken", res.data.data.token);
+      toast.success(res.data.message);
+      setUser(res.data.data.user);
+      return true;
+    }
   };
 
   const logout = () => {
@@ -36,18 +43,15 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
   };
 
-  const register = async (name, email, password, photo) => {
-    const formData = new FormData();
-    formData.append("name", name);
-    formData.append("email", email);
-    formData.append("password", password);
-    formData.append("photo", photo);
+  const register = async (name, email, password, photoUrl) => {
+    const formData = { name, email, password, photoUrl };
 
-    const res = await axios.post("/api/auth/register", formData, {
-      headers: { "Content-Type": "multipart/form-data" },
-    });
-    localStorage.setItem("authToken", res.data.token);
-    setUser(res.data.user);
+    const res = await axiosPublic.post("/auth/register", formData);
+    console.log(res.data.success);
+    if (res.data.success) {
+      toast.success(res.data.message);
+      return true;
+    }
   };
 
   return (
