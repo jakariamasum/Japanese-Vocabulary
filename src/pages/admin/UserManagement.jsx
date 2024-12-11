@@ -15,7 +15,7 @@ const UserManagement = () => {
     setIsLoading(true);
     try {
       const response = await axiosPublic.get("/users");
-      setUsers(response.data);
+      setUsers(response.data.data);
     } catch (err) {
       console.log(err.message);
     } finally {
@@ -25,16 +25,16 @@ const UserManagement = () => {
 
   const handleRoleUpdate = async (userId, newRole) => {
     try {
-      await axiosPublic.put(`/users/${userId}/role`, { role: newRole });
-
-      // Update the user's role in the local state
-      setUsers(
-        users.map((user) =>
-          user._id === userId ? { ...user, role: newRole } : user
-        )
-      );
-
-      toast.success(`User role updated successfully to ${newRole}`);
+      const response = await axiosPublic.put(`/users/${userId}/role`, {
+        role: newRole,
+      });
+      console.log(response);
+      fetchUsers();
+      if (response.data.success) {
+        toast.success(`User role updated successfully to ${newRole}`);
+      } else {
+        toast.error("Something went wrong");
+      }
     } catch (err) {
       toast.error(err.message);
     }
@@ -70,7 +70,7 @@ const UserManagement = () => {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {users.map((user) => (
+              {users?.map((user) => (
                 <tr key={user._id}>
                   <td className="px-6 py-4 whitespace-nowrap">{user.name}</td>
                   <td className="px-6 py-4 whitespace-nowrap">{user.email}</td>
@@ -90,6 +90,7 @@ const UserManagement = () => {
                       <Button
                         variant="danger"
                         onClick={() => handleRoleUpdate(user._id, "user")}
+                        className="text-red-600 hover:text-red-900 bg-red-100 hover:bg-red-200 px-3 py-1 rounded-full transition duration-300"
                       >
                         Demote to User
                       </Button>
