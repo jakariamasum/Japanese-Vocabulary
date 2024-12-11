@@ -12,10 +12,8 @@ const Login = () => {
   const onSubmit = async (data) => {
     console.log(data);
     try {
-      const sucess = await login(data.email, data.password);
-      if (sucess) {
-        navigate("/");
-      }
+      const user = await login(data.email, data.password);
+      user?.role === "admin" ? navigate("/admin") : navigate("/lessons");
     } catch (error) {
       toast.error(
         error instanceof Error

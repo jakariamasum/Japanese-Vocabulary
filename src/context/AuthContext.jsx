@@ -7,6 +7,7 @@ const AuthContext = createContext(undefined);
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const checkLoggedIn = async () => {
@@ -17,9 +18,10 @@ export const AuthProvider = ({ children }) => {
           setUser(res.data.data.user);
         } catch (error) {
           console.error("Error checking authentication", error);
-          localStorage.removeItem("token");
+          localStorage.removeItem("authToken");
         }
       }
+      setLoading(false);
     };
     checkLoggedIn();
   }, []);
@@ -31,7 +33,7 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem("authToken", res.data.data.token);
       toast.success(res.data.message);
       setUser(res.data.data.user);
-      return true;
+      return res.data.data.user;
     }
   };
 
@@ -52,7 +54,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, register }}>
+    <AuthContext.Provider value={{ user, loading, login, logout, register }}>
       {children}
     </AuthContext.Provider>
   );

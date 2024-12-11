@@ -11,6 +11,7 @@ import Tutorials from "../pages/Tutorials";
 import Lessons from "../pages/Lessons";
 import LearnLesson from "../pages/LearnLesson";
 import AdminDashboard from "../pages/admin/AdminDashboard";
+import PrivateRoute from "../Providers/PrivateRoute";
 
 export const router = createBrowserRouter([
   {
@@ -19,7 +20,11 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Home />,
+        element: (
+          <PrivateRoute>
+            <Home />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/login",
@@ -31,35 +36,70 @@ export const router = createBrowserRouter([
       },
       {
         path: "/tutorials",
-        element: <Tutorials />,
+        element: (
+          <PrivateRoute>
+            <Tutorials />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/lessons",
-        element: <Lessons />,
+        element: (
+          <PrivateRoute>
+            <Lessons />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/lessons/:lessonNo",
-        element: <LearnLesson />,
+        element: (
+          <PrivateRoute>
+            <LearnLesson />
+          </PrivateRoute>
+        ),
       },
     ],
   },
   {
     path: "/admin",
-    element: <AdminLayout />,
+    element: (
+      <PrivateRoute>
+        <AdminLayout />
+      </PrivateRoute>
+    ),
     children: [
-      { index: true, element: <AdminDashboard /> },
+      {
+        index: true,
+        element: (
+          <PrivateRoute>
+            <AdminDashboard />
+          </PrivateRoute>
+        ),
+      },
 
       {
         path: "lesson-management",
-        element: <LessonManagement />,
+        element: (
+          <PrivateRoute>
+            <LessonManagement />
+          </PrivateRoute>
+        ),
       },
       {
         path: "vocabulary-management",
-        element: <VocabularyManagement />,
+        element: (
+          <PrivateRoute>
+            <VocabularyManagement />
+          </PrivateRoute>
+        ),
       },
       {
         path: "user-management",
-        element: <UserManagement />,
+        element: (
+          <PrivateRoute>
+            <UserManagement />
+          </PrivateRoute>
+        ),
       },
     ],
   },
