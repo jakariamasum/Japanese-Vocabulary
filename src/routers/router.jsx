@@ -5,6 +5,7 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 import AdminLayout from "../components/Layout/AdminLayout";
 import LessonManagement from "../pages/admin/LessonManagement";
+import VocabularyManagement from "../pages/admin/VocabularyManagement";
 
 export const router = createBrowserRouter([
   {
@@ -32,6 +33,10 @@ export const router = createBrowserRouter([
       {
         path: "lesson-management",
         element: <LessonManagement />,
+      },
+      {
+        path: "vocabulary-management",
+        element: <VocabularyManagement />,
       },
     ],
   },
