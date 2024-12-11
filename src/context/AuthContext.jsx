@@ -1,6 +1,5 @@
 /* eslint-disable react/prop-types */
 import { createContext, useState, useContext, useEffect } from "react";
-import axios from "axios";
 import axiosPublic from "../lib/axiosPublic";
 import { toast } from "sonner";
 
@@ -11,13 +10,11 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const checkLoggedIn = async () => {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("authToken");
       if (token) {
         try {
-          const res = await axios.get("/api/auth/me", {
-            headers: { Authorization: `Bearer ${token}` },
-          });
-          setUser(res.data);
+          const res = await axiosPublic.get("/auth/me");
+          setUser(res.data.data.user);
         } catch (error) {
           console.error("Error checking authentication", error);
           localStorage.removeItem("token");
