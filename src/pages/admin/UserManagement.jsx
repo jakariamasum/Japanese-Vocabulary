@@ -49,7 +49,7 @@ const UserManagement = () => {
   }
 
   return (
-    <div className="container mx-auto px-4 py-1">
+    <div className="container md:mx-auto md:px-4 py-1">
       <div className="bg-white shadow-md rounded-lg overflow-hidden">
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200">

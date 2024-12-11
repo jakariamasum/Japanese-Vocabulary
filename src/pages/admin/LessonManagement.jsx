@@ -73,7 +73,7 @@ const LessonManagement = () => {
   };
 
   return (
-    <div className="container mx-auto px-4 py-1">
+    <div className="container md:mx-auto md:px-4 py-1">
       <div className="flex justify-end mb-4">
         <Button onClick={() => openModal()}>Create Lesson</Button>
       </div>

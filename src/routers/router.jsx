@@ -10,6 +10,7 @@ import UserManagement from "../pages/admin/UserManagement";
 import Tutorials from "../pages/Tutorials";
 import Lessons from "../pages/Lessons";
 import LearnLesson from "../pages/LearnLesson";
+import AdminDashboard from "../pages/admin/AdminDashboard";
 
 export const router = createBrowserRouter([
   {
@@ -46,6 +47,8 @@ export const router = createBrowserRouter([
     path: "/admin",
     element: <AdminLayout />,
     children: [
+      { index: true, element: <AdminDashboard /> },
+
       {
         path: "lesson-management",
         element: <LessonManagement />,
