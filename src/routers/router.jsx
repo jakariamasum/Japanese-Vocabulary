@@ -6,6 +6,7 @@ import Register from "../pages/Register";
 import AdminLayout from "../components/Layout/AdminLayout";
 import LessonManagement from "../pages/admin/LessonManagement";
 import VocabularyManagement from "../pages/admin/VocabularyManagement";
+import UserManagement from "../pages/admin/UserManagement";
 
 export const router = createBrowserRouter([
   {
@@ -37,6 +38,10 @@ export const router = createBrowserRouter([
       {
         path: "vocabulary-management",
         element: <VocabularyManagement />,
+      },
+      {
+        path: "user-management",
+        element: <UserManagement />,
       },
     ],
   },

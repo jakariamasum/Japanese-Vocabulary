@@ -15,33 +15,10 @@ const AdminLayout = () => {
                 Dashboard
               </Link>
             </li>
+
             <li>
               <Link
-                to="/admin/lessons"
-                className="block py-2 px-4 rounded hover:bg-gray-700"
-              >
-                Manage Lessons
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/admin/add-lesson"
-                className="block py-2 px-4 rounded hover:bg-gray-700"
-              >
-                Add Lesson
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/admin/add-vocabulary"
-                className="block py-2 px-4 rounded hover:bg-gray-700"
-              >
-                Add Vocabulary
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/admin/manage-users"
+                to="/admin/user-management"
                 className="block py-2 px-4 rounded hover:bg-gray-700"
               >
                 Manage Users
