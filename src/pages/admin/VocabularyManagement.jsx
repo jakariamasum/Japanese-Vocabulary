@@ -91,7 +91,7 @@ const VocabularyManagement = () => {
       toast.success("Vocabulary deleted successfully");
     } catch (error) {
       console.error("Error:", error);
-      alert(error.message);
+      toast.error(error.message);
     }
   };
 
