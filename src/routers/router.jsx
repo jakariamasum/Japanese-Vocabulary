@@ -8,6 +8,8 @@ import LessonManagement from "../pages/admin/LessonManagement";
 import VocabularyManagement from "../pages/admin/VocabularyManagement";
 import UserManagement from "../pages/admin/UserManagement";
 import Tutorials from "../pages/Tutorials";
+import Lessons from "../pages/Lessons";
+import LearnLesson from "../pages/LearnLesson";
 
 export const router = createBrowserRouter([
   {
@@ -29,6 +31,14 @@ export const router = createBrowserRouter([
       {
         path: "/tutorials",
         element: <Tutorials />,
+      },
+      {
+        path: "/lessons",
+        element: <Lessons />,
+      },
+      {
+        path: "/lessons/:lessonNo",
+        element: <LearnLesson />,
       },
     ],
   },
