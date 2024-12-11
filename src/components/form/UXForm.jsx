@@ -3,14 +3,15 @@
 import { FormProvider, useForm } from "react-hook-form";
 
 const UXForm = ({ children, onSubmit, defaultValues, resolver }) => {
+  console.log(defaultValues);
   const formConfig = {};
 
-  if (!defaultValues) {
-    formConfig["defaultValues"] = defaultValues;
+  if (defaultValues) {
+    formConfig.defaultValues = defaultValues;
   }
 
-  if (!resolver) {
-    formConfig["resolver"] = resolver;
+  if (resolver) {
+    formConfig.resolver = resolver;
   }
 
   const methods = useForm(formConfig);

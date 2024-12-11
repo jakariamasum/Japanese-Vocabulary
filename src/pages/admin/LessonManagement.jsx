@@ -17,8 +17,9 @@ const LessonManagement = () => {
 
   const fetchLessons = async () => {
     try {
-      const response = await axiosPublic.get("/api/lessons");
-      setLessons(response.data);
+      const response = await axiosPublic.get("/lessons");
+      console.log(response.data.data);
+      setLessons(response.data.data);
     } catch (error) {
       console.error("Error fetching lessons:", error);
       toast.error("Failed to load lessons. Please try again.");
@@ -27,6 +28,7 @@ const LessonManagement = () => {
 
   const openModal = (lesson = null) => {
     setIsModalOpen(true);
+    console.log(lesson);
     if (lesson) {
       setEditingLesson(lesson);
     } else {
@@ -40,10 +42,9 @@ const LessonManagement = () => {
   };
 
   const onSubmit = async (data) => {
+    console.log(editingLesson);
     try {
-      const url = editingLesson
-        ? `/api/lessons/${editingLesson._id}`
-        : "/api/lessons";
+      const url = editingLesson ? `/lessons/${editingLesson._id}` : "/lessons";
       editingLesson
         ? await axiosPublic.put(url, data)
         : await axiosPublic.post(url, data);
@@ -62,7 +63,7 @@ const LessonManagement = () => {
 
   const handleDelete = async (lessonId) => {
     try {
-      await axiosPublic.delete(`/api/lessons/${lessonId}`);
+      await axiosPublic.delete(`/lessons/${lessonId}`);
       fetchLessons();
       toast.success("Lesson deleted successfully");
     } catch (error) {
@@ -135,7 +136,9 @@ const LessonManagement = () => {
             <tbody className="bg-white divide-y divide-gray-200">
               {lessons.map((lesson) => (
                 <tr key={lesson._id}>
-                  <td className="px-6 py-4 whitespace-nowrap">{lesson.name}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    {lesson.lessonName}
+                  </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     {lesson.lessonNumber}
                   </td>
