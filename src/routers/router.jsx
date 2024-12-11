@@ -63,7 +63,7 @@ export const router = createBrowserRouter([
   {
     path: "/admin",
     element: (
-      <PrivateRoute>
+      <PrivateRoute adminOnly={true}>
         <AdminLayout />
       </PrivateRoute>
     ),
@@ -71,7 +71,7 @@ export const router = createBrowserRouter([
       {
         index: true,
         element: (
-          <PrivateRoute>
+          <PrivateRoute adminOnly={true}>
             <AdminDashboard />
           </PrivateRoute>
         ),
@@ -80,7 +80,7 @@ export const router = createBrowserRouter([
       {
         path: "lesson-management",
         element: (
-          <PrivateRoute>
+          <PrivateRoute adminOnly={true}>
             <LessonManagement />
           </PrivateRoute>
         ),
@@ -88,7 +88,7 @@ export const router = createBrowserRouter([
       {
         path: "vocabulary-management",
         element: (
-          <PrivateRoute>
+          <PrivateRoute adminOnly={true}>
             <VocabularyManagement />
           </PrivateRoute>
         ),

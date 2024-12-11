@@ -1,12 +1,12 @@
 /* eslint-disable react/prop-types */
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
-const PrivateRoute = ({ adminOnly = false }) => {
+const PrivateRoute = ({ adminOnly = false, children }) => {
   const { user, loading } = useAuth();
 
   if (loading) {
-    return <div>Loading...</div>; // Show a loading spinner or placeholder
+    return <div>Loading...</div>;
   }
 
   if (!user) {
@@ -17,7 +17,7 @@ const PrivateRoute = ({ adminOnly = false }) => {
     return <Navigate to="/lessons" replace />;
   }
 
-  return <Outlet />;
+  return children;
 };
 
 export default PrivateRoute;

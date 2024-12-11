@@ -6,11 +6,13 @@ const Lessons = () => {
   const [lessons, setLessons] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  console.log(lessons);
 
   useEffect(() => {
     const fetchLessons = async () => {
       try {
         const response = await axiosPublic.get("/lessons");
+        console.log(response);
         setLessons(response.data.data);
         setIsLoading(false);
       } catch (error) {
