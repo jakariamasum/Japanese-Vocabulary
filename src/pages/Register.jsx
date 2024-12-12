@@ -4,6 +4,7 @@ import UXForm from "../components/form/UXForm";
 import UXInput from "../components/form/UXInput";
 import Button from "../components/ui/Button";
 import { useNavigate } from "react-router-dom";
+import UXImage from "../components/form/UXImage";
 
 const Register = () => {
   const { register: registerUser } = useAuth();
@@ -64,11 +65,9 @@ const Register = () => {
             />
           </div>
           <div>
-            <UXInput
-              type="url"
+            <UXImage
               name="photoUrl"
-              placeholder="https://example.com/your-photo.jpg"
-              label="Photo URL (optional)"
+              label="Profile Photo (optional)"
               required={false}
             />
           </div>

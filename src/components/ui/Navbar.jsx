@@ -147,9 +147,9 @@ const MobileNavLink = ({ to, isActive, onClick, children }) => (
 const UserMenu = ({ user, logout }) => (
   <div className="flex items-center space-x-4">
     <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
-      {user.photoUrl ? (
+      {user?.img ? (
         <img
-          src={user.photoUrl}
+          src={user?.img}
           alt={user.name}
           className="w-full h-full object-cover"
         />
